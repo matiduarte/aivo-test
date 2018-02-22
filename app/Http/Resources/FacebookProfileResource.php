@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Facebook\Facebook;
 use Facebook\Exceptions;
+use Illuminate\Support\Facades\Config;
 
 class FacebookProfileResource extends JsonResource
 {
@@ -17,11 +18,17 @@ class FacebookProfileResource extends JsonResource
      */
     public function toArray($request)
     {
-
-        $facebook = new Facebook();
+        $facebook = new Facebook([
+            'app_id' => Config::get('facebook.app_id'),
+            'app_secret' => Config::get('facebook.app_secret'),
+            'default_graph_version' => 'v2.12',
+        ]);
 
         try {
-            $response = $facebook->get('/'.$request->id, 'EAAFlRGrTYIwBAA5V3bvtJPH9GNLz8De2EE6mhL0K9AHFWTM3VhXZCelLtJzSCX7NjRC8XcL8e2NykV3fsZCs5gSMLwvZBjGzs4yDXZAX9MGKdbTfpzk8MXdF0h5s6g4SQNiuqDSwZCA1AZCxQtT2WZCH42mBMUWgPoZD');
+            //Get the access token with client_id and secret
+            $api_token = json_decode(file_get_contents('https://graph.facebook.com/oauth/access_token?client_id='.$facebook->getApp()->getId().'&client_secret='.$facebook->getApp()->getSecret().'&grant_type=client_credentials'));
+            //Call to Facebook API Graph with user id
+            $response = $facebook->get('/'.$request->id, $api_token->access_token);
         } catch(Exceptions\FacebookResponseException $e) {
             return [
                 'error' => [
@@ -36,11 +43,8 @@ class FacebookProfileResource extends JsonResource
             return [
                 'error' => [
                     'message' => $e->getMessage(),
-                    'type' => $e->getErrorType(),
                     'code' => $e->getCode(),
-                    'error_subcode' => $e->getSubErrorCode()
-                ],
-                'status' => $e->getHttpStatusCode()
+                ]
             ];
         }
 
