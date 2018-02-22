@@ -45,4 +45,22 @@ Por defecto el puerto asignado es el 8000, en caso de querer modificar el puerto
 $  php artisan serve --port=8080
 ```
 
-## Uso
+## Uso de la API
+
+Para poder probar la API, deberá abrir su navegador e ingresar la siguiente URL
+
+#### Consultar perfil Usuario:
+
+>URL: http://localhost:8000/api/profile/facebook/{id}
+
+```
+Respuesta Ejemplo:
+{
+    data: {
+            name: "Mati Duarte",
+            id: "10214896922593764"
+          },
+    status: 200
+}
+
+```
