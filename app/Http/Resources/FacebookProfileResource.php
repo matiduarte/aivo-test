@@ -18,6 +18,7 @@ class FacebookProfileResource extends JsonResource
      */
     public function toArray($request)
     {
+        //Facebook Object with app_id and secret to call the API Graph
         $facebook = new Facebook([
             'app_id' => Config::get('facebook.app_id'),
             'app_secret' => Config::get('facebook.app_secret'),

@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class FacebookApiTest extends TestCase
 {
 
-    public function testFacebookGetShouldReturnSuccess()
+    public function testFacebookApiGetShouldReturnSuccess()
     {
         $response = $this->json('GET', '/api/profile/facebook/10214896922593764');
 
@@ -31,7 +31,7 @@ class FacebookApiTest extends TestCase
 
     public function testApiErrorResponseWithErrorAndStatus()
     {
-        $response = $this->json('GET', '/api/profile/facebook/1');
+        $response = $this->json('GET', '/api/profile/facebook/-?123');
 
         $response
             ->assertStatus(200)
