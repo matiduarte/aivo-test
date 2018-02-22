@@ -54,13 +54,35 @@ Para poder probar la API, deberá abrir su navegador e ingresar la siguiente URL
 >URL: http://localhost:8000/api/profile/facebook/{id}
 
 ```
-Respuesta Ejemplo:
+Response:
 {
     data: {
-            name: "Mati Duarte",
-            id: "10214896922593764"
-          },
+        name: "Mati Duarte",
+        id: "10214896922593764"
+    },
     status: 200
 }
+```
 
+Si el id ingresado es incorrecto se devolverá el error correspondiente con toda su información
+>URL: http://localhost:8000/api/profile/facebook/***
+
+```
+Response:
+{
+    error: {
+        message: "(#803) Some of the aliases you requested do not exist: ***",
+        type: "OAuthException",
+        code: 803,
+        error_subcode: -1
+    },
+    status: 404
+}
+```
+
+## Tests
+
+Para poder correr las pruebas, dentro de la carpeta del proyecto ingresar el siguiente comando:
+```
+$  vendor/bin/phpunit
 ```
