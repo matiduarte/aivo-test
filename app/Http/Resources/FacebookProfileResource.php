@@ -2,12 +2,12 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\Resource;
 use Facebook\Facebook;
 use Facebook\Exceptions;
 use Illuminate\Support\Facades\Config;
 
-class FacebookProfileResource extends JsonResource
+class FacebookProfileResource extends Resource
 {
     /**
      * Transform the resource into an array.
